@@ -29,13 +29,13 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 
 <h2>Тренды сезона</h2>
 <?$APPLICATION->IncludeComponent(
-	"bitrix:catalog.section",
-	".default",
+	"bitrix:catalog.section", 
+	".default", 
 	array(
 		"IBLOCK_TYPE_ID" => "catalog",
-		"IBLOCK_ID" => "2",
+		"IBLOCK_ID" => "5",
 		"BASKET_URL" => "/personal/cart/",
-		"COMPONENT_TEMPLATE" => "",
+		"COMPONENT_TEMPLATE" => ".default",
 		"IBLOCK_TYPE" => "catalog",
 		"SECTION_ID" => $_REQUEST["SECTION_ID"],
 		"SECTION_CODE" => "",
@@ -62,10 +62,11 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 			1 => "",
 		),
 		"OFFERS_PROPERTY_CODE" => array(
-			0 => "COLOR_REF",
-			1 => "SIZES_SHOES",
-			2 => "SIZES_CLOTHES",
-			3 => "",
+			0 => "",
+			1 => "COLOR_REF",
+			2 => "SIZES_SHOES",
+			3 => "SIZES_CLOTHES",
+			4 => "",
 		),
 		"OFFERS_SORT_FIELD" => "sort",
 		"OFFERS_SORT_ORDER" => "desc",
@@ -74,13 +75,10 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 		"OFFERS_LIMIT" => "5",
 		"TEMPLATE_THEME" => "site",
 		"PRODUCT_DISPLAY_MODE" => "Y",
-		"ADD_PICT_PROP" => "MORE_PHOTO",
+		"ADD_PICT_PROP" => "-",
 		"LABEL_PROP" => "-",
 		"OFFER_ADD_PICT_PROP" => "-",
 		"OFFER_TREE_PROPS" => array(
-			0 => "COLOR_REF",
-			1 => "SIZES_SHOES",
-			2 => "SIZES_CLOTHES",
 		),
 		"PRODUCT_SUBSCRIPTION" => "N",
 		"SHOW_DISCOUNT_PERCENT" => "N",
@@ -131,9 +129,6 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 		"PRODUCT_PROPERTIES" => array(
 		),
 		"OFFERS_CART_PROPERTIES" => array(
-			0 => "COLOR_REF",
-			1 => "SIZES_SHOES",
-			2 => "SIZES_CLOTHES",
 		),
 		"ADD_TO_BASKET_ACTION" => "ADD",
 		"PAGER_TEMPLATE" => "round",
@@ -147,7 +142,9 @@ $APPLICATION->SetTitle("Интернет-магазин \"Одежда\"");
 		"PAGER_BASE_LINK_ENABLE" => "N",
 		"SET_STATUS_404" => "N",
 		"SHOW_404" => "N",
-		"MESSAGE_404" => ""
+		"MESSAGE_404" => "",
+		"BACKGROUND_IMAGE" => "-",
+		"DISABLE_INIT_JS_IN_COMPONENT" => "N"
 	),
 	false
 );?>
