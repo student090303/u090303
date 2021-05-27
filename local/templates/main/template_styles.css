@@ -247,7 +247,7 @@ a img {
 /* ========================================================================== */
 .main-menu {  min-width:960px; background: #3a3a3a url(images/menu-background.png) repeat-x top;   height:80px;  }
 .main-menu .ornament { height:80px; background: transparent url(images/main-menu-ornament.png) no-repeat center; }
-.main-menu .logo {   width:280px;   float:left;   padding-top:20px;  }
+.main-menu .logo {   width:190px;   float:left;   padding-top:20px;  }
 .main-menu .menu {  padding-top:23px;  float:right;  text-align:right; font-size:15px;  }
 .menu .last { background:transparent; margin-right:0px; padding-right:0px;}
 .menu .last a{  padding-right:0px;}
@@ -362,8 +362,8 @@ li.sfHover > a > .sf-sub-indicator {
     text-align:center;
 	display:block;
 	padding:8px 8px 8px 15px;
-    padding-right:25px;
-    padding-left:22px;
+    padding-right:8px;
+    padding-left:8px;
 	float:left;
 	color:#FFFFFF;
 	text-decoration:none;

@@ -88,63 +88,22 @@ Loc::loadMessages(__FILE__);?>
 					"PATH" => SITE_TEMPLATE_PATH."/include_areas/logo.php"
 				)
 			);?>
-			<div class="menu">
-				<!-- navigation start -->
-				<div id="navigation">
-
-					<ul class="sf-menu">
-						<li class="current"><a href="index-roundabout.html" class="applyfont">Home</a>
-							<ul>
-								<li><a href="index-cycle.html">Home Normal</a></li>
-								<li><a href="index-roundabout-autoplay.html">Home Roundabout Autoplay</a></li>
-								<li><a href="index-roundabout.html">Home Roundabout</a></li>
-								<li><a href="index-nivo-slider.html">Home Nivo Slider</a></li>
-								<li class="last roundbottom"><a href="index-feature-carousel.html">Home Feature Carousel</a></li>
-							</ul>
-						</li>
-						<li><a href="gallery-grid.html" class="applyfont">Gallery</a>
-							<ul>
-								<li><a href="gallery-grid.html">Gallery Grid Filterable</a></li>
-								<li><a href="gallery-list.html">Gallery List</a></li>
-								<li><a href="gallery-grid-sidebar.html">Gallery Grid Sidebar</a></li>
-								<li><a href="blank.html">Another Page</a><ul>
-										<li class="roundtop"><a href="blank.html">Risus malesuada mi</a></li>
-										<li><a href="blank.html">Fusce tincidunt nisl nec</a></li>
-										<li><a href="blank.html">Curabitur plac orci mi stincidunt</a></li>
-										<li class="last roundbottom"><a href="blank.html">Nec lorem mattis</a></li>
-									</ul>
-								</li>
-								<li class="last roundbottom"><a href="blank.html">Page With Stuff On It</a></li>
-							</ul>
-						</li>
-						<li><a href="faq.html" class="applyfont">FAQ</a></li>
-						<li><a href="services-wide.html" class="applyfont">Services</a>
-							<ul>
-								<li><a href="services-sidebar.html">Services Sidebar</a></li>
-								<li><a href="services-wide.html">Services Wide Big Icons</a></li>
-								<li class="last roundbottom"><a href="services-wide-small.html">Services Wide Small Icons</a></li>
-							</ul>
-						</li>
-						<li><a href="blog-grid.html" class="applyfont">Blog</a>
-							<ul>
-								<li><a href="blog-grid.html">Blog Style Grid</a></li>
-								<li><a href="blog-grid-noimage.html">Blog Style Grid No Image</a></li>
-								<li><a href="blog-list.html">Blog Style List</a></li>
-								<li class="last roundbottom"><a href="blog-list-noimage.html">Blog Style List No Image</a></li>
-							</ul>
-
-						</li>
-						<li class="last"><a href="contact-half.html" class="applyfont">Contact</a>
-							<ul>
-								<li><a href="contact-half.html">Contact Style Halfed</a></li>
-								<li class="last roundbottom"><a href="contact-wide.html">Contact Style Wide</a></li>
-							</ul>
-						</li>
-					</ul>
-
-				</div>
-				<!-- navigation end -->
-			</div>
+			<?$APPLICATION->IncludeComponent(
+				"bitrix:menu",
+				"top_menu",
+				Array(
+					"ALLOW_MULTI_SELECT" => "N",
+					"CHILD_MENU_TYPE" => "left",
+					"DELAY" => "N",
+					"MAX_LEVEL" => "2",
+					"MENU_CACHE_GET_VARS" => array(""),
+					"MENU_CACHE_TIME" => "3600",
+					"MENU_CACHE_TYPE" => "N",
+					"MENU_CACHE_USE_GROUPS" => "Y",
+					"ROOT_MENU_TYPE" => "left",
+					"USE_EXT" => "Y"
+				)
+			);?>
 			<div class="clear"></div>
 		</div>
 	</div>
