@@ -9,19 +9,22 @@
 	<div class="containit">
 
 		<div class="full-width clearfix">
-			<div class="one-fourth panel">
-				<div class="nopad">
-					<h4>Lorem Ipsum</h4>
-					<ul>
-						<li><a href="#">Nulla vel lorem</a></li>
-						<li><a href="#">Porttitor orci vulputate</a></li>
-
-						<li><a href="#">Placerat mollis</a></li>
-						<li><a href="#">Suscipit risus felis</a></li>
-						<li class="last"><a href="#">Nullam ligula felis</a></li>
-					</ul>
-				</div>
-			</div>
+			<?$APPLICATION->IncludeComponent(
+				"bitrix:menu",
+				"bottom_left",
+				Array(
+					"ALLOW_MULTI_SELECT" => "N",
+					"CHILD_MENU_TYPE" => "left",
+					"DELAY" => "N",
+					"MAX_LEVEL" => "1",
+					"MENU_CACHE_GET_VARS" => array(""),
+					"MENU_CACHE_TIME" => "3600",
+					"MENU_CACHE_TYPE" => "A",
+					"MENU_CACHE_USE_GROUPS" => "Y",
+					"ROOT_MENU_TYPE" => "top",
+					"USE_EXT" => "N"
+				)
+			);?>
 			<div class="one-fourth panel border-vert-left">
 
 				<div class="padleft">
