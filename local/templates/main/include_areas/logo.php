@@ -1,2 +1,2 @@
 <?if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();?>
-<div class="logo"><?if(!CSite::InDir('/')):?><a href="/"><?endif;?><img src="<?=SITE_TEMPLATE_PATH;?>/images/logo.png" alt="Novux" /><?if(!CSite::InDir('/')):?></a><?endif;?></div>
+<div class="logo"><?if($APPLICATION->GetCurPage(false) != '/'):?><a href="/"><?endif;?><img src="<?=SITE_TEMPLATE_PATH;?>/images/logo.png" alt="Novux" /><?if($APPLICATION->GetCurPage(false) != '/'):?></a><?endif;?></div>
