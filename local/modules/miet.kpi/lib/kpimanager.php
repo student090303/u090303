@@ -57,7 +57,7 @@ class KPIManager {
 		//Получаем список всех KPI данных подразделений
 		return self::GetKPI(
 			array('NAME' => 'asc'),
-			array('PROPERTY_DEPARTMENT.ID' => $arDepartmentsUser),
+			array('PROPERTY_DEPARTMENT' => $arDepartmentsUser['UF_DEPARTMENT']),
 			false,
 			false,
 			array('ID', 'NAME', 'PROPERTY_INDICATOR_TYPE', 'PROPERTY_WEIGHT', 'PROPERTY_REGULATIONS')
