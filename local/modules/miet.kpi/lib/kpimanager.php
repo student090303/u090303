@@ -101,7 +101,7 @@ class KPIManager {
 			return array();
 		}
 		$filter = array('UF_KPI' => $idKPI, 'UF_EMPLOYEE' => $idEmployee, 'UF_PERIOD' => $period);
-		$select = array('ID', 'UF_VALUE');
-		return KPIEmployeeTable::getList(['filter' => $filter, 'select' => $select])->fetch();
+		$select = array('ID', 'UF_KPI', 'UF_VALUE');
+		return KPIEmployeeTable::getList(['filter' => $filter, 'select' => $select])->fetchAll();
 	}
 }
