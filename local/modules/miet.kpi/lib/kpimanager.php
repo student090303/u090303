@@ -150,6 +150,7 @@ class KPIManager {
 			$currentDepartmentKPI = static::GetKPIDepartment($idKPI, $idDepartment, $period);
 
 			if ($currentDepartmentKPI) {
+				$currentDepartmentKPI = reset($currentDepartmentKPI);
 				$arValue = array(
 					'UF_VALUE' => $newDepartmentKPI,
 					'UF_CHANGED_BY' => $USER->GetID(),
@@ -186,6 +187,6 @@ class KPIManager {
 
 		$filter = array('UF_KPI' => $idKPI, 'UF_DEPARTMENT' => $idDepartment, 'UF_PERIOD' => $period);
 		$select = array('ID', 'UF_KPI', 'UF_VALUE');
-		return KPIDepartmentTable::getList(['filter' => $filter, 'select' => $select])->fetch();
+		return KPIDepartmentTable::getList(['filter' => $filter, 'select' => $select])->fetchAll();
 	}
 }
