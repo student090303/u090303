@@ -25,15 +25,6 @@ if(strlen($arParams["DATE_FORMAT"]) <= 0) {
 	$arParams["DATE_FORMAT"] = $DB->DateFormatToPHP(CSite::GetDateFormat("SHORT"));
 }
 ###
-###Сохранение значений KPI###
-if($_REQUEST['saveKPI']) {
-	if(KPI\KPIManager::SetKPIEmployee($arParams["USER_ID"], $_REQUEST['UF_PERIOD'], $_REQUEST['KPI'])) {
-		$arResult['OK'] = 'Изменения успешно сохранены';
-	} else {
-		$arResult['ERROR'] = 'Ошибка при сохранении';
-	}
-}
-###
 ###Получение данных из БД###
 if($this->StartResultCache(false, array(($arParams["CACHE_GROUPS"] === "N" ? false: $USER->GetGroups()), date('Y')))) {
 	if ($arUser = CUser::GetByID($arParams["USER_ID"])->Fetch()) {

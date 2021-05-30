@@ -10,7 +10,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 <form action="<?=POST_FORM_ACTION_URI?>" method="POST">
 	<select name="UF_PERIOD">
 		<?foreach($arResult['PERIOD_ITEMS'] as $arItem):?>
-			<option <?=$arItem['SELECTED'];?> value="<?=$arItem['VALUE'];?>"><?=$arItem['VALUE'];?></option>
+			<option<?if ($arItem['VALUE'] == $_REQUEST['UF_PERIOD']) {?> selected="selected"<?}?> value="<?=$arItem['VALUE'];?>"><?=$arItem['VALUE'];?></option>
 		<?endforeach;?>
 	</select>
 	<table style="border-width: 0px; border-spacing: 10px;">
@@ -18,7 +18,9 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 		<?foreach($arResult["ITEMS"] as $arItem):?>
 			<tr>
 				<td><?=$arItem['NAME'];?></td>
-				<td><input type="text" name="KPI[<?=$arItem['ID']?>]" value="<?=$_REQUEST['kpi-'.$arItem['ID']];?>"></td>
+				<td>
+					<input type="text" name="KPI[<?=$arItem['ID']?>]" value="<?=$arResult['KPI'][$arItem['ID']]?$arResult['KPI'][$arItem['ID']]['UF_VALUE']:$_REQUEST['KPI'][$arItem['ID']];?>">
+				</td>
 				<td>
 					<?foreach($arItem['PROPERTY_REGULATIONS_VALUE'] as $fileRegulation):?>
 						<a href="<?=$fileRegulation['SRC'];?>" target="_blank"><?=$fileRegulation['ORIGINAL_NAME'];?></a><br>
@@ -29,7 +31,7 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 		<tr>
 			<td colspan="3">
 				<input type="submit" name="saveKPI" value="Сохранить">
-				<input type="cancel" value="Очистить">
+				<input type="reset" value="Очистить">
 			</td>
 		</tr>
 		</tbody>

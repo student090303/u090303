@@ -63,8 +63,8 @@ class KPIManager {
 			array('ID', 'NAME', 'PROPERTY_INDICATOR_TYPE', 'PROPERTY_WEIGHT', 'PROPERTY_REGULATIONS')
 		);
 	}
-	public static function SetKPIEmployee($idEmployee, $period, $arKPIValues) {
-		if(!$idEmployee || !is_array($arKPIValues) || !count($arKPIValues)) {
+	public static function SetKPIEmployee($idEmployee, $period, $arKPIValues, $existValues = array()) {
+		if(!$idEmployee || !is_array($arKPIValues) || !count($arKPIValues) || !is_array($existValues)) {
 			return array();
 		}
 		global $USER;
@@ -73,18 +73,29 @@ class KPIManager {
 		//Начинаем транзакцию
 		$db->startTransaction();
 		foreach($arKPIValues as $KPI => $KPIValue) {
-			$arValue = array(
-				'UF_VALUE' => $KPIValue,
-				'UF_KPI' => $KPI,
-				'UF_EMPLOYEE' => $idEmployee,
-				'UF_CREATED_BY' => $USER->GetID(),
-				'UF_CREATED' => new \Bitrix\Main\Type\DateTime(date('d.m.Y') . ' 00:00:00'),
-				'UF_PERIOD' => new \Bitrix\Main\Type\DateTime($period. ' 00:00:00')
-			);
-			$result = KPIEmployeeTable::add($arValue);
+			if (isset($existValues[$KPI])) {
+				$arValue = array(
+					'UF_VALUE' => $KPIValue,
+					'UF_CHANGED_BY' => $USER->GetID(),
+					'UF_CHANGED' => new \Bitrix\Main\Type\DateTime(date('d.m.Y') . ' 00:00:00'),
+
+				);
+				$result = KPIEmployeeTable::update($existValues[$KPI]['ID'], $arValue);
+			} else {
+				$arValue = array(
+					'UF_VALUE' => $KPIValue,
+					'UF_KPI' => $KPI,
+					'UF_EMPLOYEE' => $idEmployee,
+					'UF_CREATED_BY' => $USER->GetID(),
+					'UF_CREATED' => new \Bitrix\Main\Type\DateTime(date('d.m.Y') . ' 00:00:00'),
+					'UF_PERIOD' => new \Bitrix\Main\Type\DateTime($period . ' 00:00:00'));
+				$result = KPIEmployeeTable::add($arValue);
+			}
 			if (!$result->isSuccess()) {
 				$db->rollbackTransaction();
 				return false;
+			} else {
+
 			}
 		}
 		if ($result->isSuccess()) {
@@ -103,5 +114,78 @@ class KPIManager {
 		$filter = array('UF_KPI' => $idKPI, 'UF_EMPLOYEE' => $idEmployee, 'UF_PERIOD' => $period);
 		$select = array('ID', 'UF_KPI', 'UF_VALUE');
 		return KPIEmployeeTable::getList(['filter' => $filter, 'select' => $select])->fetchAll();
+	}
+
+	public static function SetKPIDepartment($idKPI, $idDepartment, $period){
+		if(!$idKPI || !$idDepartment || !$period) {
+			return false;
+		}
+		if (!($period = \Bitrix\Main\Type\DateTime::createFromUserTime($period))) {
+			return false;
+		}
+
+		// Получим всех сотрудников подразделения
+		$arDepartmentsUser = UserTable::getList(array(
+			'select' => array(
+				'ID'
+			),
+			'filter' => array(
+				'UF_DEPARTMENT' => $idDepartment
+			)
+		))->fetchAll();
+
+		$arDepartmentsUser = array_column($arDepartmentsUser, 'ID');
+		$employeeCount = count($arDepartmentsUser);
+
+		if ($employeeCount > 0) {
+			global $USER;
+			// Получим KPI для всех сотрудников подраздаления за отчётный период
+			$employeeKPI = static::GetKPIEmployeeValue($idKPI, $arDepartmentsUser, $period);
+			$employeeKPISumm = 0;
+
+			array_walk($employeeKPI, function ($item) use (&$employeeKPISumm) {$employeeKPISumm += $item['UF_VALUE'];});
+
+			$newDepartmentKPI = round($employeeKPISumm / $employeeCount, 2);
+
+			$currentDepartmentKPI = static::GetKPIDepartment($idKPI, $idDepartment, $period);
+
+			if ($currentDepartmentKPI) {
+				$arValue = array(
+					'UF_VALUE' => $newDepartmentKPI,
+					'UF_CHANGED_BY' => $USER->GetID(),
+					'UF_CHANGED' => new \Bitrix\Main\Type\DateTime(date('d.m.Y') . ' 00:00:00'),
+
+				);
+				$result = KPIDepartmentTable::update($currentDepartmentKPI['ID'], $arValue);
+			} else {
+				$arValue = array(
+					'UF_VALUE' => $newDepartmentKPI,
+					'UF_KPI' => $idKPI,
+					'UF_DEPARTMENT' => $idDepartment,
+					'UF_CREATED_BY' => $USER->GetID(),
+					'UF_CREATED' => new \Bitrix\Main\Type\DateTime(date('d.m.Y') . ' 00:00:00'),
+					'UF_PERIOD' => new \Bitrix\Main\Type\DateTime($period . ' 00:00:00'));
+				$result = KPIDepartmentTable::add($arValue);
+			}
+
+			if ($result->isSuccess()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static function GetKPIDepartment($idKPI, $idDepartment, $period){
+		if(!$idKPI || !$idDepartment || !$period) {
+			return array();
+		}
+		if (!($period = \Bitrix\Main\Type\DateTime::createFromUserTime($period))) {
+			return array();
+		}
+
+		$filter = array('UF_KPI' => $idKPI, 'UF_DEPARTMENT' => $idDepartment, 'UF_PERIOD' => $period);
+		$select = array('ID', 'UF_KPI', 'UF_VALUE');
+		return KPIDepartmentTable::getList(['filter' => $filter, 'select' => $select])->fetch();
 	}
 }
